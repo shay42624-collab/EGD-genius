@@ -1,9 +1,9 @@
 import streamlit as st
-from openai import OpenAI
+import openai
 import PyPDF2
 
-# Initialize OpenAI client
-client = OpenAI()
+# Load OpenAI API key from Streamlit secrets
+openai.api_key = st.secrets["openai"]["api_key"]
 
 # Streamlit UI setup
 st.set_page_config(page_title="EGD Genius", page_icon="📐")
@@ -25,8 +25,8 @@ question = st.text_area("Ask your EGD question")
 if st.button("Get Help") and question.strip():
     with st.spinner("Sketching out ideas..."):
         try:
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # Use GPT-3.5 for now
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": f"You are a helpful tutor for EGD students, specializing in {topic}."},
                     {"role": "user", "content": f"Explain this in simple terms: {question}"}

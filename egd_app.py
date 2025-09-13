@@ -25,7 +25,8 @@ question = st.text_area("Ask your EGD question")
 if st.button("Get Help") and question.strip():
     with st.spinner("Sketching out ideas..."):
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(...)
+(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": f"You are a helpful tutor for EGD students, specializing in {topic}."},
